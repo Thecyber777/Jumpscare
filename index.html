@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: black; /* Mengubah warna latar belakang web menjadi hitam */
+    }
+
+    #jumpscare-container {
+      position: relative;
+    }
+
+    #jumpscare-video {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 9999;
+    }
+
+    #jumpscare-button {
+      font-size: 20px;
+      padding: 10px 20px;
+      background-color: red;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+    }
+
+    #jumpscare-button:hover {
+      background-color: #c62828;
+      transform: scale(1.05);
+    }
+
+    #jumpscare-button:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+  <div id="jumpscare-container">
+    <button id="jumpscare-button" onclick="showJumpscare()">CLAIM</button>
+    <video id="jumpscare-video" preload="metadata">
+      <source src="https://telegra.ph/file/9346094d03846f695b77c.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script>
+    function showJumpscare() {
+      var video = document.getElementById('jumpscare-video');
+      document.getElementById('jumpscare-button').style.display = 'none';
+      video.style.display = 'block';
+      video.play().then(() => {
+        // Hiding video onended to allow replay
+        video.addEventListener('ended', function() {
+          video.style.display = 'none';
+          document.getElementById('jumpscare-button').style.display = 'block';
+        });
+      }).catch((error) => {
+        console.error('Error playing video: ', error);
+        // Handle any errors during video play
+        video.style.display = 'none';
+        document.getElementById('jumpscare-button').style.display = 'block';
+      });
+    }
+  </script>
+</body>
+</html>
